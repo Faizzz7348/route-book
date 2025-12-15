@@ -8,10 +8,6 @@ import { Info, GripVertical, Power, Image as ImageIcon } from "lucide-react";
 import { useState } from "react";
 
 export default function KL4Page() {
-  const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [lightboxImages, setLightboxImages] = useState<string[]>([]);
-  const [lightboxIndex, setLightboxIndex] = useState(0);
-
   const [routes, setRoutes] = useState([
     { 
       id: 1,
@@ -21,8 +17,8 @@ export default function KL4Page() {
       location: "KL Sentral",
       delivery: "Daily",
       images: [
-        "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=400",
-        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=400"
+        "https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=400",
+        "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=400"
       ],
       active: true
     },
@@ -34,9 +30,9 @@ export default function KL4Page() {
       location: "Bangsar",
       delivery: "Daily",
       images: [
-        "https://images.unsplash.com/photo-1600585154084-4e5fe7c39198?w=400",
-        "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=400",
-        "https://images.unsplash.com/photo-1600607687644-aac4c3eac7f4?w=400"
+        "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=400",
+        "https://images.unsplash.com/photo-1516156008625-3a9d6067fab5?w=400",
+        "https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=400"
       ],
       active: true
     },
@@ -48,7 +44,7 @@ export default function KL4Page() {
       location: "Abdullah Hukum",
       delivery: "Weekly",
       images: [
-        "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=400"
+        "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=400"
       ],
       active: false
     },
@@ -60,8 +56,8 @@ export default function KL4Page() {
       location: "Kerinchi",
       delivery: "Daily",
       images: [
-        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400",
-        "https://images.unsplash.com/photo-1600566753151-384129cf4e3e?w=400"
+        "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=400",
+        "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400"
       ],
       active: true
     },
@@ -73,9 +69,9 @@ export default function KL4Page() {
       location: "Universiti",
       delivery: "Daily",
       images: [
-        "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=400",
-        "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=400",
-        "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=400"
+        "https://images.unsplash.com/photo-1562774053-701939374585?w=400",
+        "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400",
+        "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=400"
       ],
       active: true
     },
@@ -93,12 +89,6 @@ export default function KL4Page() {
     ));
   };
 
-  const openLightbox = (images: string[], index: number = 0) => {
-    setLightboxImages(images);
-    setLightboxIndex(index);
-    setLightboxOpen(true);
-  };
-
   return (
     <SidebarLayout>
       <div className="space-y-6">
@@ -113,13 +103,13 @@ export default function KL4Page() {
           <table className="w-full">
             <thead className="bg-gradient-to-r from-card to-card/50 border-b border-border">
               <tr>
-                <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Route</th>
-                <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">No</th>
-                <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Code</th>
-                <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Location</th>
-                <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Delivery</th>
-                <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Image</th>
-                <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Action</th>
+                <th className="px-4 py-3 text-center text-sm font-semibold text-foreground">Route</th>
+                <th className="px-4 py-3 text-center text-sm font-semibold text-foreground">No</th>
+                <th className="px-4 py-3 text-center text-sm font-semibold text-foreground">Code</th>
+                <th className="px-4 py-3 text-center text-sm font-semibold text-foreground">Location</th>
+                <th className="px-4 py-3 text-center text-sm font-semibold text-foreground">Delivery</th>
+                <th className="px-4 py-3 text-center text-sm font-semibold text-foreground">Image</th>
+                <th className="px-4 py-3 text-center text-sm font-semibold text-foreground">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -179,29 +169,7 @@ export default function KL4Page() {
                   {/* Image */}
                   <td className="px-4 py-3 text-sm">
                     {route.images.length > 0 ? (
-                      <div className="flex gap-1">
-                        {route.images.slice(0, 3).map((img, idx) => (
-                          <button
-                            key={idx}
-                            onClick={() => openLightbox(route.images, idx)}
-                            className="relative w-10 h-10 rounded border-2 border-border hover:border-primary transition-colors overflow-hidden group"
-                          >
-                            <img
-                              src={img}
-                              alt={`Preview ${idx + 1}`}
-                              className="w-full h-full object-cover group-hover:scale-110 transition-transform"
-                            />
-                          </button>
-                        ))}
-                        {route.images.length > 3 && (
-                          <button
-                            onClick={() => openLightbox(route.images)}
-                            className="w-10 h-10 rounded border-2 border-border hover:border-primary transition-colors flex items-center justify-center bg-muted text-xs font-medium"
-                          >
-                            +{route.images.length - 3}
-                          </button>
-                        )}
-                      </div>
+                      <ImageLightbox images={route.images} rowId={route.id.toString()} />
                     ) : (
                       <div className="flex items-center gap-1 text-muted-foreground">
                         <ImageIcon className="h-4 w-4" />
@@ -245,12 +213,6 @@ export default function KL4Page() {
           </table>
         </div>
       </div>
-      <ImageLightbox
-        images={lightboxImages}
-        isOpen={lightboxOpen}
-        onClose={() => setLightboxOpen(false)}
-        initialIndex={lightboxIndex}
-      />
       <FloatingDock />
     </SidebarLayout>
   );

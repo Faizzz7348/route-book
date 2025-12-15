@@ -2,29 +2,35 @@
 @tailwind components;
 @tailwind utilities;
 
+/* LightGallery CSS */
+@import 'lightgallery/css/lightgallery.css';
+@import 'lightgallery/css/lg-thumbnail.css';
+@import 'lightgallery/css/lg-zoom.css';
+@import 'lightgallery/css/lg-fullscreen.css';
+
 @layer base {
   :root {
     /* Ocean Deep Blue Dark Theme */
-    --background: 210 60% 6%;
+    --background: 210 60% 3%;
     --foreground: 210 100% 95%;
     
-    --card: 213 48% 12%;
+    --card: 213 48% 8%;
     --card-foreground: 210 100% 95%;
     
-    --popover: 213 48% 12%;
+    --popover: 213 48% 8%;
     --popover-foreground: 210 100% 95%;
     
     --primary: 198 100% 63%;
-    --primary-foreground: 210 60% 6%;
+    --primary-foreground: 210 60% 3%;
     
-    --secondary: 211 45% 22%;
+    --secondary: 211 45% 15%;
     --secondary-foreground: 210 100% 95%;
     
-    --muted: 211 45% 22%;
+    --muted: 211 45% 15%;
     --muted-foreground: 206 96% 76%;
     
     --accent: 198 100% 63%;
-    --accent-foreground: 210 60% 6%;
+    --accent-foreground: 210 60% 3%;
     
     --destructive: 0 84% 60%;
     --destructive-foreground: 210 100% 95%;
@@ -36,11 +42,11 @@
     --radius: 0.5rem;
     
     /* Sidebar colors - Ocean Theme */
-    --sidebar-background: 213 48% 12%;
+    --sidebar-background: 213 48% 8%;
     --sidebar-foreground: 206 96% 76%;
     --sidebar-primary: 198 100% 63%;
-    --sidebar-primary-foreground: 210 60% 6%;
-    --sidebar-accent: 211 45% 22%;
+    --sidebar-primary-foreground: 210 60% 3%;
+    --sidebar-accent: 211 45% 15%;
     --sidebar-accent-foreground: 198 100% 77%;
     --sidebar-border: 198 100% 63% / 0.2;
     --sidebar-ring: 198 100% 63%;
@@ -60,5 +66,60 @@
 body {
   background: linear-gradient(135deg, hsl(210 60% 6%) 0%, hsl(213 48% 12%) 100%);
   min-height: 100vh;
+}
+
+/* Glass Morphism Effects - iOS Style */
+@layer components {
+  .glass {
+    @apply bg-white/5 backdrop-blur-md border border-white/10;
+  }
+  
+  .glass-dark {
+    @apply bg-black/20 backdrop-blur-md border border-white/10;
+  }
+  
+  /* Animations for iOS-style transitions */
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slide-up {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slide-down {
+    from {
+      transform: translateY(-20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  .animate-fade-in {
+    animation: fade-in 0.3s ease-out;
+  }
+  
+  .animate-slide-up {
+    animation: slide-up 0.3s ease-out;
+  }
+  
+  .animate-slide-down {
+    animation: slide-down 0.3s ease-out;
+  }
 }
 

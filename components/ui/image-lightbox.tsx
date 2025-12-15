@@ -1,80 +1,112 @@
 "use client"
 
-import { useState } from "react";
-import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Loader2 } from "lucide-react";
 
 interface ImageLightboxProps {
   images: string[];
-  isOpen: boolean;
-  onClose: () => void;
-  initialIndex?: number;
+  rowId: string;
 }
 
-export function ImageLightbox({ images, isOpen, onClose, initialIndex = 0 }: ImageLightboxProps) {
-  const [currentIndex, setCurrentIndex] = useState(initialIndex);
+export function ImageLightbox({ images, rowId }: ImageLightboxProps) {
+  const galleryRef = useRef<any>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
 
-  if (!isOpen) return null;
+  useEffect(() => {
+    let gallery: any = null;
 
-  const handleNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % images.length);
-  };
+    const loadLightGallery = async () => {
+      if (!containerRef.current || images.length === 0) return;
 
-  const handlePrevious = () => {
-    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
-  };
+      try {
+        // Dynamically import lightgallery
+        const { default: lightGallery } = await import("lightgallery");
+        const lgThumbnail = await import("lightgallery/plugins/thumbnail");
+        const lgZoom = await import("lightgallery/plugins/zoom");
+        const lgFullscreen = await import("lightgallery/plugins/fullscreen");
 
-  const handleBackdropClick = (e: React.MouseEvent) => {
-    if (e.target === e.currentTarget) {
-      onClose();
-    }
-  };
+        gallery = lightGallery(containerRef.current, {
+          licenseKey: "GPLv3",
+          plugins: [lgThumbnail.default, lgZoom.default, lgFullscreen.default],
+          speed: 500,
+          download: false,
+          selector: ".lightbox-item",
+          thumbnail: true,
+          animateThumb: true,
+        });
+
+        galleryRef.current = gallery;
+      } catch (error) {
+        console.error("Failed to load LightGallery:", error);
+      }
+    };
+
+    loadLightGallery();
+
+    return () => {
+      if (galleryRef.current) {
+        try {
+          galleryRef.current.destroy();
+        } catch (e) {
+          console.warn("Error destroying lightGallery:", e);
+        }
+      }
+    };
+  }, [images, rowId]);
+
+  if (images.length === 0) {
+    return <span className="text-xs text-muted-foreground">No image</span>;
+  }
 
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm"
-      onClick={handleBackdropClick}
-    >
-      {/* Close button */}
-      <button
-        onClick={onClose}
-        className="absolute top-4 right-4 p-2 rounded-full bg-background/10 hover:bg-background/20 transition-colors"
+    <div ref={containerRef} className="flex items-center justify-center">
+      {/* First image as clickable preview with loading state */}
+      <a
+        href={images[0]}
+        data-src={images[0]}
+        className="lightbox-item cursor-pointer relative inline-block"
       >
-        <X className="w-6 h-6 text-white" />
-      </button>
-
-      {/* Navigation buttons */}
-      {images.length > 1 && (
-        <>
-          <button
-            onClick={handlePrevious}
-            className="absolute left-4 p-3 rounded-full bg-background/10 hover:bg-background/20 transition-colors"
-          >
-            <ChevronLeft className="w-6 h-6 text-white" />
-          </button>
-          <button
-            onClick={handleNext}
-            className="absolute right-4 p-3 rounded-full bg-background/10 hover:bg-background/20 transition-colors"
-          >
-            <ChevronRight className="w-6 h-6 text-white" />
-          </button>
-        </>
-      )}
-
-      {/* Image */}
-      <div className="relative max-w-7xl max-h-[90vh] p-4">
+        {!imageLoaded && !imageError && (
+          <div className="absolute inset-0 flex items-center justify-center bg-gray-100 dark:bg-gray-800 rounded">
+            <Loader2 className="w-4 h-4 animate-spin text-primary" />
+          </div>
+        )}
         <img
-          src={images[currentIndex]}
-          alt={`Image ${currentIndex + 1}`}
-          className="max-w-full max-h-[85vh] object-contain rounded-lg"
+          src={images[0]}
+          alt="Image"
+          className={`w-10 h-8 object-cover rounded-lg border border-gray-200 dark:border-gray-700 hover:opacity-80 transition-all duration-300 ${
+            imageLoaded ? 'opacity-100' : 'opacity-0'
+          }`}
+          loading="lazy"
+          onLoad={() => setImageLoaded(true)}
+          onError={() => {
+            setImageError(true);
+            setImageLoaded(true);
+          }}
         />
         
-        {/* Counter */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full bg-background/80 backdrop-blur-sm">
-          <p className="text-sm text-foreground font-medium">
-            {currentIndex + 1} / {images.length}
-          </p>
-        </div>
-      </div>
+        {/* Count badge inside image */}
+        {images.length > 1 && (
+          <span className="absolute bottom-0.5 right-0.5 bg-black/70 text-white text-[9px] font-semibold px-1.5 py-0.5 rounded-md backdrop-blur-sm">
+            +{images.length - 1}
+          </span>
+        )}
+      </a>
+
+      {/* Hidden images for gallery */}
+      {images.slice(1).map((image, index) => (
+        <a
+          key={index + 1}
+          href={image}
+          data-src={image}
+          className="lightbox-item"
+          style={{ display: "none" }}
+        >
+          <img src={image} alt={`Image ${index + 2}`} />
+        </a>
+      ))}
     </div>
   );
 }

@@ -8,10 +8,6 @@ import { Info, GripVertical, Power, Image as ImageIcon } from "lucide-react";
 import { useState } from "react";
 
 export default function KL3Page() {
-  const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [lightboxImages, setLightboxImages] = useState<string[]>([]);
-  const [lightboxIndex, setLightboxIndex] = useState(0);
-
   const [routes, setRoutes] = useState([
     { 
       id: 1,
@@ -21,9 +17,9 @@ export default function KL3Page() {
       location: "KLCC",
       delivery: "Daily",
       images: [
-        "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400",
-        "https://images.unsplash.com/photo-1566576721346-d4a3b4eaeb55?w=400",
-        "https://images.unsplash.com/photo-1553413077-190dd305871c?w=400"
+        "https://images.unsplash.com/photo-1519003722824-194d4455a60c?w=400",
+        "https://images.unsplash.com/photo-1580674285054-bed31e145f59?w=400",
+        "https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?w=400"
       ],
       active: true
     },
@@ -35,8 +31,8 @@ export default function KL3Page() {
       location: "Ampang Park",
       delivery: "Daily",
       images: [
-        "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400",
-        "https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=400"
+        "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=400",
+        "https://images.unsplash.com/photo-1580674285054-bed31e145f59?w=400"
       ],
       active: true
     },
@@ -48,7 +44,7 @@ export default function KL3Page() {
       location: "Titiwangsa",
       delivery: "Weekly",
       images: [
-        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=400"
+        "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400"
       ],
       active: false
     },
@@ -60,9 +56,9 @@ export default function KL3Page() {
       location: "Wangsa Maju",
       delivery: "Daily",
       images: [
-        "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=400",
-        "https://images.unsplash.com/photo-1600607687644-c7171b42498f?w=400",
-        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400"
+        "https://images.unsplash.com/photo-1622186477895-f2af6a0f5a97?w=400",
+        "https://images.unsplash.com/photo-1586528116493-a029325540fa?w=400",
+        "https://images.unsplash.com/photo-1473830394358-91588751b241?w=400"
       ],
       active: true
     },
@@ -74,8 +70,8 @@ export default function KL3Page() {
       location: "Sri Rampai",
       delivery: "Daily",
       images: [
-        "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=400",
-        "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=400"
+        "https://images.unsplash.com/photo-1566933293069-b55c7f326dd4?w=400",
+        "https://images.unsplash.com/photo-1494412651409-8963ce7935a7?w=400"
       ],
       active: true
     },
@@ -93,12 +89,6 @@ export default function KL3Page() {
     ));
   };
 
-  const openLightbox = (images: string[], index: number = 0) => {
-    setLightboxImages(images);
-    setLightboxIndex(index);
-    setLightboxOpen(true);
-  };
-
   return (
     <SidebarLayout>
       <div className="space-y-6">
@@ -113,13 +103,13 @@ export default function KL3Page() {
           <table className="w-full">
             <thead className="bg-gradient-to-r from-card to-card/50 border-b border-border">
               <tr>
-                <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Route</th>
-                <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">No</th>
-                <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Code</th>
-                <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Location</th>
-                <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Delivery</th>
-                <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Image</th>
-                <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Action</th>
+                <th className="px-4 py-3 text-center text-sm font-semibold text-foreground">Route</th>
+                <th className="px-4 py-3 text-center text-sm font-semibold text-foreground">No</th>
+                <th className="px-4 py-3 text-center text-sm font-semibold text-foreground">Code</th>
+                <th className="px-4 py-3 text-center text-sm font-semibold text-foreground">Location</th>
+                <th className="px-4 py-3 text-center text-sm font-semibold text-foreground">Delivery</th>
+                <th className="px-4 py-3 text-center text-sm font-semibold text-foreground">Image</th>
+                <th className="px-4 py-3 text-center text-sm font-semibold text-foreground">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -179,29 +169,7 @@ export default function KL3Page() {
                   {/* Image */}
                   <td className="px-4 py-3 text-sm">
                     {route.images.length > 0 ? (
-                      <div className="flex gap-1">
-                        {route.images.slice(0, 3).map((img, idx) => (
-                          <button
-                            key={idx}
-                            onClick={() => openLightbox(route.images, idx)}
-                            className="relative w-10 h-10 rounded border-2 border-border hover:border-primary transition-colors overflow-hidden group"
-                          >
-                            <img
-                              src={img}
-                              alt={`Preview ${idx + 1}`}
-                              className="w-full h-full object-cover group-hover:scale-110 transition-transform"
-                            />
-                          </button>
-                        ))}
-                        {route.images.length > 3 && (
-                          <button
-                            onClick={() => openLightbox(route.images)}
-                            className="w-10 h-10 rounded border-2 border-border hover:border-primary transition-colors flex items-center justify-center bg-muted text-xs font-medium"
-                          >
-                            +{route.images.length - 3}
-                          </button>
-                        )}
-                      </div>
+                      <ImageLightbox images={route.images} rowId={route.id.toString()} />
                     ) : (
                       <div className="flex items-center gap-1 text-muted-foreground">
                         <ImageIcon className="h-4 w-4" />
@@ -245,12 +213,6 @@ export default function KL3Page() {
           </table>
         </div>
       </div>
-      <ImageLightbox
-        images={lightboxImages}
-        isOpen={lightboxOpen}
-        onClose={() => setLightboxOpen(false)}
-        initialIndex={lightboxIndex}
-      />
       <FloatingDock />
     </SidebarLayout>
   );
