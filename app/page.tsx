@@ -1,5 +1,6 @@
 import { SidebarLayout } from "@/components/app-sidebar";
 import { Calendar, Route, MapPin } from "lucide-react";
+import { FloatingDock } from "@/components/ui/floating-dock";
 
 export default function Home() {
   return (
@@ -74,7 +75,7 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <FloatingDock />
     </SidebarLayout>
   );
 }
-

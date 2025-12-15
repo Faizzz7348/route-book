@@ -190,7 +190,7 @@ export function SidebarLayout({ children }: { children: React.ReactNode }) {
               <h1 className="text-lg font-semibold text-foreground">Route Book Dashboard</h1>
             </div>
           </header>
-          <div className="p-6">{children}</div>
+          <div className="p-6 pb-24">{children}</div>
         </main>
       </div>
     </SidebarProvider>

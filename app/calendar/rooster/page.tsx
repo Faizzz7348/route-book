@@ -2,6 +2,7 @@
 
 import { SidebarLayout } from "@/components/app-sidebar";
 import { Calendar as CalendarComponent, CalendarEvent } from "@/components/ui/calendar";
+import { FloatingDock } from "@/components/ui/floating-dock";
 import { useState } from "react";
 
 export default function RoosterPage() {
@@ -57,6 +58,7 @@ export default function RoosterPage() {
           </div>
         )}
       </div>
+      <FloatingDock />
     </SidebarLayout>
   );
 }

@@ -2,6 +2,7 @@
 
 import { SidebarLayout } from "@/components/app-sidebar";
 import { EditableCell } from "@/components/ui/editable-cell";
+import { FloatingDock } from "@/components/ui/floating-dock";
 import { useState } from "react";
 
 export default function KL4Page() {
@@ -93,6 +94,7 @@ export default function KL4Page() {
           </table>
         </div>
       </div>
+      <FloatingDock />
     </SidebarLayout>
   );
 }

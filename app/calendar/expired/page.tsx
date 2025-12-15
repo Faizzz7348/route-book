@@ -1,5 +1,6 @@
 import { SidebarLayout } from "@/components/app-sidebar";
 import { Calendar, XCircle } from "lucide-react";
+import { FloatingDock } from "@/components/ui/floating-dock";
 
 export default function ExpiredPage() {
   const expiredEvents = [
@@ -57,6 +58,7 @@ export default function ExpiredPage() {
           ))}
         </div>
       </div>
+      <FloatingDock />
     </SidebarLayout>
   );
 }
